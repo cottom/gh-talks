@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "outDir": "./types/",
+        "sourceMap": true,
+        "strict": true,
+        "lib": [
+          "dom",
+          "es2015"
+        ],
+        "module": "es6",
+        "moduleResolution": "node",
+        "target": "es5",
+        "rootDir": "src",
+        "allowSyntheticDefaultImports": true,
+        "experimentalDecorators": true
+    },
+    "include": [
+        "./src/**/*"
+    ],
+    "exclude": [
+      "node_modules"
+  ]
+}
