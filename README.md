@@ -1,6 +1,6 @@
 # gh-talk
 
-light-weight site discuss addOn base on `github` issue comments.
+light discuss add-on based on `github` issue's comments.
 
 ## API
 

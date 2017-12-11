@@ -1,3 +1,4 @@
+import { exchangeToken } from './../api';
 import GhTalks from '../index'
 
 export interface GhTalksOption {
@@ -11,6 +12,7 @@ export interface GhTalksOption {
   renderFn?: Function
   renderEditor?: Function
   renderComments?: Function
+  exchangeTokenURL?: string
 }
 
 export interface GitHubUser {

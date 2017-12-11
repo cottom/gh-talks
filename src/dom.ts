@@ -32,6 +32,7 @@ const renderLoading = (container: Element) => {
 
 const stopLoading = (container: Element) => {
   const loadingEl = container.querySelector(LOADING_CLASS_SELECTOR)
+  console.log(loadingEl)
   loadingEl && disappearEL(loadingEl)
 }
 
@@ -95,6 +96,7 @@ function defaultRenderEditor (meta: RenderMeta) {
         } catch (error) {
           console.error(error)
         } finally {
+          console.log('stop')
           stopLoading(editorContainer)
         }
       },
@@ -116,7 +118,7 @@ function defaultRenderEditor (meta: RenderMeta) {
         <div class="gh-talk-login__btn-container"><span role="button" class="gh-talk-login__btn-container">Login With Github</span></div>
       </div>
     `
-    const btn = container.querySelector('.gh-talk-login__btn-container')
+    const btn = container.querySelector('svg')
     if (btn) {
       btn.addEventListener('click', () => {
         instance.toLoginIn()
