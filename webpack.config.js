@@ -9,7 +9,7 @@ const resolve = v => path.resolve(__dirname, v)
 const isDevelopment = process.env.NODE_ENV === 'development'
 let plugins = [
   new ExtractTextPlugin('index.css'),
-  new CleanWebpackPlugin([isDevelopment ? 'doc' : 'dist']),
+  new CleanWebpackPlugin([isDevelopment ? 'docs' : 'dist']),
 ]
 const appEntry = isDevelopment ? {app: resolve('example/test.js')} : {}
 if (isDevelopment) {
@@ -61,14 +61,14 @@ module.exports = {
     ],
   },
   devServer: {
-    contentBase: './doc'
+    contentBase: './docs'
   },
   resolve: {
     extensions: [ '.ts', '.js', '.styl' ]
   },
   output: {
     filename: '[name].js',
-    path: isDevelopment ? resolve('doc') : resolve('dist'),
+    path: isDevelopment ? resolve('docs') : resolve('dist'),
     library: 'GhTalk',
     libraryTarget: 'var',
     publicPath: isDevelopment ? '/' : './'
