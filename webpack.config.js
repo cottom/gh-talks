@@ -7,6 +7,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const resolve = v => path.resolve(__dirname, v)
 
 const isDevelopment = process.env.NODE_ENV === 'development'
+const isDocBuild = !!process.env.DOC_ENV
 let plugins = [
   new ExtractTextPlugin('index.css'),
   new CleanWebpackPlugin([isDevelopment ? 'docs' : 'dist']),
@@ -71,7 +72,7 @@ module.exports = {
     path: isDevelopment ? resolve('docs') : resolve('dist'),
     library: 'GhTalk',
     libraryTarget: 'var',
-    publicPath: isDevelopment ? '/' : './'
+    publicPath: isDocBuild ? './' : '/'
   },
   plugins
 }
