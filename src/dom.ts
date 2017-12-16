@@ -19,20 +19,21 @@ const showEl = (el: Element) => (el.classList.remove('display-none'))
 const LOADING_CLASS_NAME = 'gh-talk-loading'
 const LOADING_CLASS_SELECTOR = `.${LOADING_CLASS_NAME}`
 
-const renderLoading = (container: Element) => {
+const renderLoading = (container: HTMLElement) => {
   const loadingEl = container.querySelector(LOADING_CLASS_SELECTOR)
   if (loadingEl) showEl(loadingEl)
   else {
     const _loadingEL = document.createElement('div')
     _loadingEL.classList.add(LOADING_CLASS_NAME)
     _loadingEL.innerHTML = loadingSVG
+    if (!container.innerHTML) _loadingEL.style.backgroundColor = '#fff'
+    else _loadingEL.style.backgroundColor = null
     container.appendChild(_loadingEL)
   }
 }
 
 const stopLoading = (container: Element) => {
   const loadingEl = container.querySelector(LOADING_CLASS_SELECTOR)
-  console.log(loadingEl)
   loadingEl && disappearEL(loadingEl)
 }
 
@@ -41,7 +42,7 @@ export class DOMRender {
   _comments: Comment
   _renderComments?: Function
   _renderEditor?: Function
-  constructor (options: GhTalksOption, container: Element) {
+  constructor (options: GhTalksOption, container: HTMLElement) {
     const { renderComments, renderEditor } = options
     this._renderComments = renderComments
     this._renderEditor = renderEditor
@@ -81,7 +82,7 @@ function defaultRenderEditor (meta: RenderMeta) {
   const { instance, user, iframe } = meta
   if (user) {
     const config: renderEditorProps = {
-      saveHandler: async (text: string, cb: Function, editorContainer: Element) => {
+      saveHandler: async (text: string, cb: Function, editorContainer: HTMLElement) => {
         renderLoading(editorContainer)
         try {
           const res = await instance.resource.createComment(text)
@@ -96,7 +97,6 @@ function defaultRenderEditor (meta: RenderMeta) {
         } catch (error) {
           console.error(error)
         } finally {
-          console.log('stop')
           stopLoading(editorContainer)
         }
       },
@@ -141,14 +141,14 @@ function renderEditor (config: renderEditorProps) {
       </nav>
     </div>
     <div class="gh-talk-editor__content">
-      <textarea class="gh-talk-editor__textarea"></textarea>
+      <textarea class="gh-talk-editor__textarea" placeholder="Styling with Markdown is supported"></textarea>
     </div>
     <div class="gh-talk-editor__preview comment-body markdown-body  js-comment-body" ></div>
     <div class="gh-talk-editor__save-btns">
       <div class="gh-talk-editor__label">
-        <a href="https://guides.github.com/features/mastering-markdown/" target="_blank" class="gh-talk__btn
+        <a href="https://jerry-i.github.io/gh-talks/" target="_blank" class="gh-talk__btn
         gh-talk__btn--text gh-talk-editor__markdown-btn gh-talk__comment__action-btn">
-         ${markdownSVG} Styling with Markdown is supported
+         ${markdownSVG} powered by ghtalks
         </a>
 
       </div>
@@ -259,7 +259,7 @@ function renderSignComment (meta: RenderMeta, item: Comment) {
     }
 
     const editorConfig = {
-      saveHandler: async (text: string, cb: Function, container: Element) => {
+      saveHandler: async (text: string, cb: Function, container: HTMLElement) => {
         renderLoading(container)
         try {
           const res = await instance.resource.editComment(item.id, text)
@@ -320,8 +320,8 @@ function renderUser (user: GitHubUser) {
   const container = document.createElement('div')
   container.className = 'gh-talk__user'
   container.innerHTML = `
-    <a href="${user.html_url}">
-      <img class="gh-talk__user-avatar" src="${user.avatar_url}" height="44" target="_blank"/>
+    <a href="${user.html_url}"  target="_blank">
+      <img class="gh-talk__user-avatar" src="${user.avatar_url}" height="44"/>
     </a>
   `
   return container

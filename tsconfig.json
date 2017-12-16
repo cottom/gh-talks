@@ -2,6 +2,7 @@
     "compilerOptions": {
         "outDir": "./types/",
         "sourceMap": true,
+        "baseUrl": "./src",
         "strict": true,
         "lib": [
           "dom",

@@ -14,8 +14,9 @@ class  GhTalk {
   private domRender: DOMRender
   constructor (options: GhTalksOption) {
     this.options = options
-    const el =  document.querySelector(options.selector)
+    let el =  <HTMLElement>document.body.querySelector(options.selector)
     if (!el){
+      el = el;
       this.error(`can\'t find target selector ${options.selector}`)
       return
     }

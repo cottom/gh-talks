@@ -777,7 +777,7 @@
   width: 44px;
 }
 .gh-talk__comment {
-  flex: 2;
+  width: calc(100% - 64px);
   margin-left: 20px;
   border: solid 1px #ddd;
   border-radius: 2px;
@@ -861,6 +861,9 @@
 }
 .gh-talk__comment-preview {
   padding: 10px 16px;
+}
+.gh-talk__comment-preview .highlight-text-html-basic {
+  overflow-x: auto;
 }
 .gh-talk-login {
   margin-top: 8px;
@@ -959,6 +962,15 @@ span
   align-items: center;
   height: 100%;
   width: 100%;
+}
+.gh-talk-iframe__main {
+  max-width: 300px;
+  position: absolute;
+  transform: translateX(-50%) translateY(-50%);
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  background-color: #fff;
 }
 
 /*# sourceMappingURL=index.css.map*/

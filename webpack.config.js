@@ -19,11 +19,6 @@ if (isDevelopment) {
       filename: 'index.html',
       template: 'example/index.html',
       chunks: ['index', 'app']
-    }),
-    new HtmlWebpackPlugin({
-      filename: 'callback.html',
-      template: 'example/callback.html',
-      chunks: ['iframe']
     })
   ])
 } else plugins.push(new UglifyJSPlugin())

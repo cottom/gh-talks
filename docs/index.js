@@ -1340,12 +1340,12 @@ var renderLoading = function renderLoading(container) {
         var _loadingEL = document.createElement('div');
         _loadingEL.classList.add(LOADING_CLASS_NAME);
         _loadingEL.innerHTML = _resource.loadingSVG;
+        if (!container.innerHTML) _loadingEL.style.backgroundColor = '#fff';else _loadingEL.style.backgroundColor = null;
         container.appendChild(_loadingEL);
     }
 };
 var stopLoading = function stopLoading(container) {
     var loadingEl = container.querySelector(LOADING_CLASS_SELECTOR);
-    console.log(loadingEl);
     loadingEl && disappearEL(loadingEl);
 };
 var DOMRender = /** @class */function () {
@@ -1431,7 +1431,6 @@ function defaultRenderEditor(meta) {
                                 console.error(error_1);
                                 return [3 /*break*/, 5];
                             case 4:
-                                console.log('stop');
                                 stopLoading(editorContainer);
                                 return [7 /*endfinally*/];
                             case 5:
@@ -1468,7 +1467,7 @@ function renderEditor(config) {
         instance = config.instance;
     var container = document.createElement('div');
     container.className = 'gh-talk-editor';
-    container.innerHTML = "\n    <div class=\"gh-talk-editor__header\">\n      <div class=\"gh-talk-editor__toolbox\"></div>\n      <nav class=\"gh-talk-editor__btns\" role=\"tablist\">\n        <button class=\"gh-talk__btn gh-talk-editor__write-btn selected gh-talk-editor__nav-btn\" role=\"tab\">Write</button>\n        <button class=\"gh-talk__btn gh-talk-editor__preview-btn gh-talk-editor__nav-btn\" role=\"tab\">Preview</button>\n      </nav>\n    </div>\n    <div class=\"gh-talk-editor__content\">\n      <textarea class=\"gh-talk-editor__textarea\"></textarea>\n    </div>\n    <div class=\"gh-talk-editor__preview comment-body markdown-body  js-comment-body\" ></div>\n    <div class=\"gh-talk-editor__save-btns\">\n      <div class=\"gh-talk-editor__label\">\n        <a href=\"https://guides.github.com/features/mastering-markdown/\" target=\"_blank\" class=\"gh-talk__btn\n        gh-talk__btn--text gh-talk-editor__markdown-btn gh-talk__comment__action-btn\">\n         " + _resource.markdownSVG + " Styling with Markdown is supported\n        </a>\n\n      </div>\n      <div class=\"gh-talk-editor__execute\">\n        " + (cancelHandler && "<button class=\"gh-talk__btn gh-talk-editor__execute-cancel gh-talk__btn--lg gh-talk__btn--default\">Cancel</button>" || '') + "\n        <button class=\"gh-talk__btn gh-talk__btn--primary gh-talk__btn--lg gh-talk__btn--bg  gh-talk-editor__execute-submit\">Submit</button>\n      </div>\n    </div>\n  ";
+    container.innerHTML = "\n    <div class=\"gh-talk-editor__header\">\n      <div class=\"gh-talk-editor__toolbox\"></div>\n      <nav class=\"gh-talk-editor__btns\" role=\"tablist\">\n        <button class=\"gh-talk__btn gh-talk-editor__write-btn selected gh-talk-editor__nav-btn\" role=\"tab\">Write</button>\n        <button class=\"gh-talk__btn gh-talk-editor__preview-btn gh-talk-editor__nav-btn\" role=\"tab\">Preview</button>\n      </nav>\n    </div>\n    <div class=\"gh-talk-editor__content\">\n      <textarea class=\"gh-talk-editor__textarea\" placeholder=\"Styling with Markdown is supported\"></textarea>\n    </div>\n    <div class=\"gh-talk-editor__preview comment-body markdown-body  js-comment-body\" ></div>\n    <div class=\"gh-talk-editor__save-btns\">\n      <div class=\"gh-talk-editor__label\">\n        <a href=\"https://jerry-i.github.io/gh-talks/\" target=\"_blank\" class=\"gh-talk__btn\n        gh-talk__btn--text gh-talk-editor__markdown-btn gh-talk__comment__action-btn\">\n         " + _resource.markdownSVG + " powered by ghtalks\n        </a>\n\n      </div>\n      <div class=\"gh-talk-editor__execute\">\n        " + (cancelHandler && "<button class=\"gh-talk__btn gh-talk-editor__execute-cancel gh-talk__btn--lg gh-talk__btn--default\">Cancel</button>" || '') + "\n        <button class=\"gh-talk__btn gh-talk__btn--primary gh-talk__btn--lg gh-talk__btn--bg  gh-talk-editor__execute-submit\">Submit</button>\n      </div>\n    </div>\n  ";
     var writeBtn = container.querySelector('.gh-talk-editor__write-btn');
     var previewBtn = container.querySelector('.gh-talk-editor__preview-btn');
     var textarea = container.querySelector('textarea');
@@ -1628,7 +1627,7 @@ function renderSignComment(meta, item) {
 function renderUser(user) {
     var container = document.createElement('div');
     container.className = 'gh-talk__user';
-    container.innerHTML = "\n    <a href=\"" + user.html_url + "\">\n      <img class=\"gh-talk__user-avatar\" src=\"" + user.avatar_url + "\" height=\"44\" target=\"_blank\"/>\n    </a>\n  ";
+    container.innerHTML = "\n    <a href=\"" + user.html_url + "\"  target=\"_blank\">\n      <img class=\"gh-talk__user-avatar\" src=\"" + user.avatar_url + "\" height=\"44\"/>\n    </a>\n  ";
     return container;
 }
 
@@ -2912,8 +2911,9 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 var GhTalk = /** @class */function () {
     function GhTalk(options) {
         this.options = options;
-        var el = document.querySelector(options.selector);
+        var el = document.body.querySelector(options.selector);
         if (!el) {
+            el = el;
             this.error("can't find target selector " + options.selector);
             return;
         }

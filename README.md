@@ -2,27 +2,30 @@
 
 light discuss add-on based on `github` issue's comments.
 
-## API
-
-### [issue's Comment api](https://developer.github.com/v3/issues/comments/#create-a-comment)
+## start
 ```
-GET /repos/:owner/:repo/issues/:number/comments
+npm i -S gh-talk
 ```
 
-```
-POST /repos/:owner/:repo/issues/:number/comments
-{
-  "body": "Me too"
-}
+or
+
+```html
+<script src="https://unpkg.com/gh-talk/dist/index.js"></script>
 ```
 
-```
-PATCH /repos/:owner/:repo/issues/comments/:id
-{
-  "body": "Me too"
-}
-```
+## init
 
-```
-DELETE /repos/:owner/:repo/issues/comments/:id
+```js
+new GhTalk({
+  selector: '#talk-container'
+  clientId: string,
+  clientSecret: string,
+  owner: string
+  issueId: number
+  repo: string
+  renderFn?: Function
+  renderEditor?: Function
+  renderComments?: Function
+  exchangeTokenURL?: string
+})
 ```
