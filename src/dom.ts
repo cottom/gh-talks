@@ -73,6 +73,12 @@ function defaultRenderComments (meta: RenderMeta) {
   const commentsContainer = document.createElement('div')
   commentsContainer.className = 'gh-talk__comments-list'
   commentEls.forEach(item => (commentsContainer.appendChild(item)))
+  if (!commentsContainer.innerHTML) {
+    const emptyEl = document.createElement('div')
+    emptyEl.classList.add('gh-talk__empty')
+    emptyEl.innerHTML = 'no comments'
+    commentsContainer.appendChild(emptyEl)
+  }
   return commentsContainer
 }
 
@@ -91,7 +97,10 @@ function defaultRenderEditor (meta: RenderMeta) {
           const parent = container.parentElement
           if (parent) {
             const el = parent.querySelector('.gh-talk__comments-list')
-            if (el) el.appendChild(commentEl)
+            if (el) {
+              if (!el.querySelector('.gh-talk__comment-item')) el.innerHTML = '' // clear empty
+              el.appendChild(commentEl)
+            }
           }
           cb && cb()
         } catch (error) {

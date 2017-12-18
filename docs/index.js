@@ -1394,6 +1394,12 @@ function defaultRenderComments(meta) {
     commentEls.forEach(function (item) {
         return commentsContainer.appendChild(item);
     });
+    if (!commentsContainer.innerHTML) {
+        var emptyEl = document.createElement('div');
+        emptyEl.classList.add('gh-talk__empty');
+        emptyEl.innerHTML = 'no comments';
+        commentsContainer.appendChild(emptyEl);
+    }
     return commentsContainer;
 }
 function defaultRenderEditor(meta) {
@@ -1422,7 +1428,10 @@ function defaultRenderEditor(meta) {
                                 parent_1 = container.parentElement;
                                 if (parent_1) {
                                     el = parent_1.querySelector('.gh-talk__comments-list');
-                                    if (el) el.appendChild(commentEl);
+                                    if (el) {
+                                        if (!el.querySelector('.gh-talk__comment-item')) el.innerHTML = ''; // clear empty
+                                        el.appendChild(commentEl);
+                                    }
                                 }
                                 cb && cb();
                                 return [3 /*break*/, 5];
