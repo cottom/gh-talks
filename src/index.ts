@@ -3,12 +3,12 @@ import './styles/index.styl'
 import { AUTH_URL, GH_TALK_TOKEN } from './constant';
 import { GhTalksOption, Comment, GitHubUser } from './types/index';
 import API, { listComments, exchangeToken } from './api';
-import { parseQuery, openIframeDialog, removeCodeInQuery } from './util';
+import { parseQuery, openLoginDialog, removeLoginDialog, removeCodeInQuery, toast } from './util';
 import { DOMRender } from './dom'
 class  GhTalk {
   private options: GhTalksOption
   resource: API
-  private comments: Comment[]
+  private comments?: Comment[]
   private user?: GitHubUser
   private rootElement: Element
   private domRender: DOMRender
@@ -45,10 +45,14 @@ class  GhTalk {
       const token = await exchangeToken(queryParams.code, this.options)
       this.initWithCode(token)
     } else {
-      if (this.options.iframe) this.initIframe()
+      if (this.options.dialog) this.initdialog()
       await this.loadComments()
       this.render()
     }
+  }
+
+  showError() {
+    toast('login error')
   }
 
   async initWithCode (token: string) {
@@ -63,27 +67,27 @@ class  GhTalk {
   render () {
     const meta = {
       user: this.user,
-      comments: this.comments,
+      comments: this.comments || [],
       instance: this
     }
     this.domRender.render(meta, this.rootElement)
   }
 
   toLoginIn () {
-    if (this.options.iframe) {
-      openIframeDialog(this.loginURL)
+    if (this.options.dialog) {
+      openLoginDialog(this.loginURL)
     } else {
       location.href = this.loginURL
     }
   }
 
   get loginURL () {
-    let { clientId, iframe } = this.options
+    let { clientId, dialog } = this.options
     const {origin} = location
-    if (iframe) {
-      if (!~iframe.indexOf('http')) iframe = `${origin}${iframe}`
+    if (dialog) {
+      return dialog
     }
-    const redirect_uri = iframe || location.href
+    const redirect_uri = dialog || location.href
     return `${AUTH_URL}?scope=public_repo&client_id=${clientId}&redirect_uri=${redirect_uri}`
   }
 
@@ -110,12 +114,17 @@ class  GhTalk {
     console.error(msg)
   }
 
-  initIframe () {
+  initdialog () {
     window.addEventListener('message', e => {
       const data = e.data
-      if (data && data.type && data.type === 'AUTH') {
+      const type = data && data.type
+      if (!type) return
+      if (type === 'AUTH') {
+        removeLoginDialog()
         const { code } = data
         this.initWithCode(code)
+      } else if (type === 'FAIL') {
+        this.showError()
       }
     })
   }

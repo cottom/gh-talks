@@ -8,7 +8,7 @@ export interface GhTalksOption {
   owner: string
   issueId: number
   repo: string
-  iframe?: string
+  dialog?: string
   renderFn?: Function
   renderEditor?: Function
   renderComments?: Function
@@ -60,7 +60,7 @@ export interface EventBusIn {
 export interface RenderMeta {
   comments: Comment[]
   user?: GitHubUser
-  iframe?: string
+  dialog?: string
   eventBus?: EventBusIn
   instance: GhTalks
 }
@@ -79,4 +79,8 @@ export interface GithubTokenRes {
   access_token: string
   scope?: string
   token_type?: string
+}
+
+export interface RenderTypes {
+
 }

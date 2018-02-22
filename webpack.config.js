@@ -26,7 +26,6 @@ if (isDevelopment) {
 module.exports = {
   entry: {
     index: resolve('src/index.ts'),
-    iframe: resolve('src/iframe.ts'),
     ...appEntry
   },
   devtool: isDevelopment && 'source-map',

@@ -39,7 +39,7 @@ const stopLoading = (container: Element) => {
 
 export class DOMRender {
   _user?: GitHubUser
-  _comments: Comment
+  _comments?: Comment
   _renderComments?: Function
   _renderEditor?: Function
   constructor (options: GhTalksOption, container: HTMLElement) {
@@ -85,7 +85,7 @@ function defaultRenderComments (meta: RenderMeta) {
 
 function defaultRenderEditor (meta: RenderMeta) {
   const container = document.createElement('div')
-  const { instance, user, iframe } = meta
+  const { instance, user, dialog } = meta
   if (user) {
     const config: renderEditorProps = {
       saveHandler: async (text: string, cb: Function, editorContainer: HTMLElement) => {

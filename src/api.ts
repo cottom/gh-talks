@@ -59,7 +59,7 @@ export default class API {
 export const listComments:(x: GhTalksOption) => AxiosPromise<Comment[]> = x => unAuthHttp.get(`/repos/${x.owner}/${x.repo}/issues/${x.issueId}/comments`, {params: {}})
 
 export const getToken = (code: string, client_id: string, client_secret: string, exchangeTokenURL?: string): AxiosPromise<GithubTokenRes> => {
-  const url = exchangeTokenURL || 'https://exchange-github-token-osnxstyani.now.sh/exchange-token'
+  const url = exchangeTokenURL || 'https://exchange-github-token-rzfxinomtn.now.sh/exchange-token'
   return axios({
     params: {code, client_id, client_secret},
     url,

@@ -1,7 +1,8 @@
 new GhTalk({
   selector: '#example-container',
-  clientId: 'd6dd2efa2063fd2983c8',
-  clientSecret: '2a352bbf350342968e8cc117352011309f3b902c',
+  // clientId: '78cb0df51a5382860408',
+  // clientSecret: '0215cebf5c8475df93065e45accc2c05a993e082',
+  dialog: 'https://exchange-github-token-rzfxinomtn.now.sh',
   owner: 'jerry-i',
   repo: 'gh-talks',
   issueId: 1
