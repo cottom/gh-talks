@@ -4,6 +4,7 @@
         "sourceMap": true,
         "baseUrl": "./src",
         "strict": true,
+        "strictPropertyInitialization": false,
         "lib": [
           "dom",
           "es2015"
